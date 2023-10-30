@@ -37,6 +37,7 @@ function gridCreation(cells, cellW) {
     let gridNumber = i;
     let cell = generateGridCell(gridNumber);
 
+    // Gestione del gioco, al click delle singole celle
     cell.addEventListener("click", function () {
       if (gameOver) {
         return;
@@ -55,12 +56,13 @@ function gridCreation(cells, cellW) {
 
       let result = "";
       if (bombs.includes(cellNumber)) {
-        cell.classList.add("bg-red");
+        this.classList.add("bg-red");
         let result = "Peccato, hai perso!";
         document.getElementById("result").innerHTML = `${result}`;
         gameOver = true;
         let score = `Punteggio: ${maxClick}`;
         document.getElementById("score").innerHTML = `${score}`;
+        highlightBombs();
         console.log(score);
       } else {
         cell.classList.add("bg-cyan");
@@ -142,4 +144,19 @@ function generateBombs(max) {
 function tryCalculate(cellsNum) {
   maxTry = cellsNum - 17;
   console.log(maxTry);
+}
+
+/**
+ * Evidenziare tutte le bombe una volta scoppiata la prima
+ * @param {any}
+ * @returns {any}
+ */
+function highlightBombs() {
+  const allCell = document.querySelectorAll(".cell");
+  for (let i = 0; i < allCell.length; i++) {
+    const singleCell = allCell[i];
+    if (bombs.includes(parseInt(singleCell.textContent))) {
+      singleCell.classList.add("bg-red");
+    }
+  }
 }
