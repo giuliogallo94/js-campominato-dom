@@ -29,17 +29,29 @@ img {
 
 h1 {
   margin-left: 0.5rem;
+  color: #031732;
 }
 
 .btn {
   padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #031732;
+  border-color: #031732;
+  color: white;
 }
 
+.game-level {
+  border-radius: 0.5rem;
+  border-color: #031732;
+  background-color: white;
+  color: #031732;
+}
 .app {
-  background-color: #6ed563;
+  background-color: #6ed663;
   height: calc(100vh - 100px);
   padding: 3rem;
   text-align: center;
+  color: #031732;
 }
 
 h2 {
@@ -51,11 +63,13 @@ h2 {
   flex-wrap: wrap;
   width: 600px;
   margin: 0 auto;
+  border-radius: 2.5rem;
 }
 
 .cell {
   aspect-ratio: 1;
-  border: 1px solid black;
+  border: 1px solid #031732;
+  border-radius: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,11 +91,12 @@ h2 {
   display: none;
 }
 
-.bg-cyan {
-  background-color: cyan;
+.clicked-cell {
+  background-color: #031732;
+  color: white;
 }
 
-.bg-red {
+.bomb {
   background-color: red;
 }
 .game-level {

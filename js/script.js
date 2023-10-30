@@ -5,7 +5,9 @@ let clickedCells = [];
 let score = 0;
 let maxClick = -1;
 let maxTry = 0;
+let gridNumber = 0;
 let gameOver = false;
+let result = "";
 
 //Mostrare la griglia di gioco al click
 const playBtnElem = document.getElementById("play");
@@ -22,7 +24,7 @@ playBtnElem.addEventListener("click", showGrid);
 function generateGridCell(innerNumber) {
   let newCell = document.createElement("div");
   newCell.classList.add("cell");
-  newCell.innerHTML = innerNumber;
+  newCell.innerHTML = `<span>${innerNumber}</span>`;
   return newCell;
 }
 
@@ -34,7 +36,7 @@ function generateGridCell(innerNumber) {
  */
 function gridCreation(cells, cellW) {
   for (let i = 1; i <= cells; i++) {
-    let gridNumber = i;
+    gridNumber = i;
     let cell = generateGridCell(gridNumber);
 
     // Gestione del gioco, al click delle singole celle
@@ -42,7 +44,6 @@ function gridCreation(cells, cellW) {
       if (gameOver) {
         return;
       }
-
       maxClick = maxClick + 1;
       console.log(maxClick);
       if (maxClick === maxTry) {
@@ -54,9 +55,8 @@ function gridCreation(cells, cellW) {
       let cellNumber = parseInt(cell.textContent);
       console.log(cellNumber);
 
-      let result = "";
       if (bombs.includes(cellNumber)) {
-        this.classList.add("bg-red");
+        this.classList.add("bomb");
         let result = "Peccato, hai perso!";
         document.getElementById("result").innerHTML = `${result}`;
         gameOver = true;
@@ -65,7 +65,7 @@ function gridCreation(cells, cellW) {
         highlightBombs();
         console.log(score);
       } else {
-        cell.classList.add("bg-cyan");
+        cell.classList.add("clicked-cell");
         clickedCells.push(cellNumber);
         console.log(clickedCells);
       }
@@ -86,7 +86,6 @@ function showGrid() {
   const resultElem = document.getElementsByTagName("h2");
   //al click svuoto la griglia
   mainGrid.innerHTML = "";
-
   //creo la griglia in base al livello scelto
   const gameLevel = document.getElementById("level").value;
   console.log(gameLevel);
@@ -156,7 +155,9 @@ function highlightBombs() {
   for (let i = 0; i < allCell.length; i++) {
     const singleCell = allCell[i];
     if (bombs.includes(parseInt(singleCell.textContent))) {
-      singleCell.classList.add("bg-red");
+      singleCell.classList.add("bomb");
+      // showText = `<i class="fa-solid fa-bomb display-none"></i>`;
+      // document.querySelectorAll(".cell").innerHTML = showText;
     }
   }
 }
