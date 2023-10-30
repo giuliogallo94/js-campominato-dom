@@ -6,8 +6,6 @@ const playBtnElem = document.getElementById("play");
 playBtnElem.addEventListener("click", showGrid);
 
 // Generare le bombe
-// const bombs = generateBombs(16);
-// console.log(bombs);
 
 // const maxClicks = gridSize - bombs.length;
 // console.log(maxClicks);
@@ -39,6 +37,7 @@ function gridCreation(cellNum, cellW) {
   for (let i = 1; i <= cellNum; i++) {
     let gridNumber = i;
     let cell = generateGridCell(gridNumber);
+
     cell.addEventListener("click", function () {
       console.log(cell);
       cell.classList.add("bg-cyan");
@@ -63,10 +62,16 @@ function showGrid() {
   console.log(gameLevel);
   if (gameLevel === "1") {
     gridCreation(100, "cell-w-1");
+    const bombs = generateBombs(100);
+    console.log(bombs);
   } else if (gameLevel === "2") {
     gridCreation(81, "cell-w-2");
+    const bombs = generateBombs(81);
+    console.log(bombs);
   } else if (gameLevel === "3") {
     gridCreation(49, "cell-w-3");
+    const bombs = generateBombs(49);
+    console.log(bombs);
   }
   mainGrid.classList.remove("display-none");
 }

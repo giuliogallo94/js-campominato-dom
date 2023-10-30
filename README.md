@@ -39,3 +39,24 @@ Al termine della partita il software deve comunicare il punteggio, cioè il nume
 **4.** Aggiungere un evento al click all'interno di ogni cella, con quest'ultima che si colora in azzurro e che faccia spuntare il numero di cella in console.
 **5.** Aggiungere la select al lato del bottone "play" con le varie difficoltà di gioco
 **6.** Fare in modo che in base al livello selezionato cambi la griglia
+**7.** Al click su **"PLAY":**
+
+    - Generare 16 bombe:
+      comprese da 1 a X(numero di celle), non duplicate.
+    - Definire numero di tentativi consentiti:
+      X(numero di celle) - 16(numero di bombe)
+
+**8.** Al click sulle **celle:**
+
+    Leggere il numero cliccato
+    - SE il numero cliccato è nell'Array di bombe:
+      La cella diventa rossa e il gioco finisce(utente perde)
+
+    - ALTRIMENTI:
+      La cella diventa azzurra e SE questo numero non è già stato
+      cliccato prima viene aggiunto all'array di numeri "non bombe".
+      Poi controllare se la lunghezza dell'array "non bombe"
+      è uguale al numero max di tentativi consentiti,
+      SE true ---> FINE GIOCO(utente VINCE)
+
+
