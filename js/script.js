@@ -1,16 +1,11 @@
 // ESECUZIONE
 const gridElem = document.querySelector(".grid");
+let bombs = [];
+let clickedCells = [];
 
 //Mostrare la griglia di gioco al click
 const playBtnElem = document.getElementById("play");
 playBtnElem.addEventListener("click", showGrid);
-
-// Generare le bombe
-
-// const maxClicks = gridSize - bombs.length;
-// console.log(maxClicks);
-
-// let clickedCells = [];
 
 /************/
 // FUNZIONI
@@ -33,14 +28,27 @@ function generateGridCell(innerNumber) {
  * @param {any}
  * viene generato il giusto numero di celle, con la giusta disposizione in base alla difficoltà del gioco
  */
-function gridCreation(cellNum, cellW) {
-  for (let i = 1; i <= cellNum; i++) {
+function gridCreation(cells, cellW) {
+  for (let i = 1; i <= cells; i++) {
     let gridNumber = i;
     let cell = generateGridCell(gridNumber);
 
     cell.addEventListener("click", function () {
       console.log(cell);
-      cell.classList.add("bg-cyan");
+      //Selezionare testo cella cliccata
+      let cellNumber = parseInt(cell.textContent);
+      console.log(cellNumber);
+
+      let result = "";
+      if (bombs.includes(cellNumber)) {
+        cell.classList.add("bg-red");
+        result = "Peccato, hai perso!";
+        document.getElementById("result").innerHTML = `${result}`;
+      } else {
+        cell.classList.add("bg-cyan");
+        clickedCells.push(cellNumber);
+        console.log(clickedCells);
+      }
     });
     gridElem.append(cell);
     cell.classList.add(cellW);
@@ -48,12 +56,13 @@ function gridCreation(cellNum, cellW) {
 }
 
 /**
- * Mostra la griglia al click
+ * Mostra la griglia al click di "PLAY"
  * @param {any}
- * @returns {any} rimozione della classe "display-none"
+ * @returns {any}
  */
 function showGrid() {
   const mainGrid = document.getElementById("main-grid");
+  const resultElem = document.getElementsByTagName("h2");
   //al click svuoto la griglia
   mainGrid.innerHTML = "";
 
@@ -62,17 +71,18 @@ function showGrid() {
   console.log(gameLevel);
   if (gameLevel === "1") {
     gridCreation(100, "cell-w-1");
-    const bombs = generateBombs(100);
-    console.log(bombs);
+    generateBombs(100);
+    let maxTry = tryCalculate(100);
   } else if (gameLevel === "2") {
     gridCreation(81, "cell-w-2");
-    const bombs = generateBombs(81);
-    console.log(bombs);
+    generateBombs(81);
+    let maxTry = tryCalculate(81);
   } else if (gameLevel === "3") {
     gridCreation(49, "cell-w-3");
-    const bombs = generateBombs(49);
-    console.log(bombs);
+    generateBombs(49);
+    let maxTry = tryCalculate(49);
   }
+
   mainGrid.classList.remove("display-none");
 }
 
@@ -91,12 +101,21 @@ function getRndInteger(min, max) {
  * @returns {array}
  */
 function generateBombs(max) {
-  const result = [];
-  while (result.length < 16) {
+  while (bombs.length < 16) {
     const rndNum = getRndInteger(1, max);
-    if (!result.includes(rndNum)) {
-      result.push(rndNum);
+    if (!bombs.includes(rndNum)) {
+      bombs.push(rndNum);
     }
   }
-  return result;
+  console.log(bombs);
+}
+
+/**
+ * Definire numero max di tentativi
+ * @param {any}
+ * @returns {number} Numero di tentativi
+ */
+function tryCalculate(cellsNum) {
+  let maxTry = cellsNum - 16;
+  console.log(maxTry);
 }

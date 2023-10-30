@@ -39,6 +39,11 @@ h1 {
   background-color: #6ed563;
   height: calc(100vh - 100px);
   padding: 3rem;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 2rem;
 }
 
 .grid {
@@ -76,6 +81,9 @@ h1 {
   background-color: cyan;
 }
 
+.bg-red {
+  background-color: red;
+}
 .game-level {
   padding: 0.5rem 1rem;
 }
