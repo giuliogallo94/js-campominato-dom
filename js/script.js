@@ -2,6 +2,10 @@
 const gridElem = document.querySelector(".grid");
 let bombs = [];
 let clickedCells = [];
+let score = 0;
+let maxClick = -1;
+let maxTry = 0;
+let gameOver = false;
 
 //Mostrare la griglia di gioco al click
 const playBtnElem = document.getElementById("play");
@@ -34,7 +38,17 @@ function gridCreation(cells, cellW) {
     let cell = generateGridCell(gridNumber);
 
     cell.addEventListener("click", function () {
-      console.log(cell);
+      if (gameOver) {
+        return;
+      }
+
+      maxClick = maxClick + 1;
+      console.log(maxClick);
+      if (maxClick === maxTry) {
+        let result = "Complimenti, hai vinto!";
+        document.getElementById("result").innerHTML = `${result}`;
+        gameOver = true;
+      }
       //Selezionare testo cella cliccata
       let cellNumber = parseInt(cell.textContent);
       console.log(cellNumber);
@@ -42,8 +56,12 @@ function gridCreation(cells, cellW) {
       let result = "";
       if (bombs.includes(cellNumber)) {
         cell.classList.add("bg-red");
-        result = "Peccato, hai perso!";
+        let result = "Peccato, hai perso!";
         document.getElementById("result").innerHTML = `${result}`;
+        gameOver = true;
+        let score = `Punteggio: ${maxClick}`;
+        document.getElementById("score").innerHTML = `${score}`;
+        console.log(score);
       } else {
         cell.classList.add("bg-cyan");
         clickedCells.push(cellNumber);
@@ -61,6 +79,7 @@ function gridCreation(cells, cellW) {
  * @returns {any}
  */
 function showGrid() {
+  gameOver = false;
   const mainGrid = document.getElementById("main-grid");
   const resultElem = document.getElementsByTagName("h2");
   //al click svuoto la griglia
@@ -81,6 +100,11 @@ function showGrid() {
     gridCreation(49, "cell-w-3");
     generateBombs(49);
     let maxTry = tryCalculate(49);
+    if (parseInt(clickedCells.length) === maxTry) {
+      let result = "Hai Vinto!";
+      document.getElementById("result").innerHTML = result;
+      console.log(result);
+    }
   }
 
   mainGrid.classList.remove("display-none");
@@ -116,6 +140,6 @@ function generateBombs(max) {
  * @returns {number} Numero di tentativi
  */
 function tryCalculate(cellsNum) {
-  let maxTry = cellsNum - 16;
+  maxTry = cellsNum - 17;
   console.log(maxTry);
 }
